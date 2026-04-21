@@ -14,6 +14,17 @@ Criado com a missão de facilitar a transição tecnológica da saúde, o app of
 - **Upload Smart**: Área de upload Drag-and-Drop amigável.
 - **Buscas e Filtros Dinâmicos**: Navegue nos protocolos com opções claras (Mobilidade, Pós-op, Coluna, etc).
 - **Design System Tailored**: Mapeamento de cores premium gerador por Stitch/Material, customizado dentro das engines puras.
+---
+
+## 🏗️ Arquitetura Front-end
+
+O FisioFlow foi desenhado com uma arquitetura escalável e robusta, visando facilitar a transição futura de dados mockados para integrações com back-ends reais (APIs) sem a necessidade de reescrever a Interface do Usuário (UI).
+
+1. **Service Layer (`src/services/`)**: Agrupa as funções que fazem o fetch de dados. Atualmente utiliza `Promises` com `setTimeout` para simular o tempo de resposta da rede em cima dos mocks. Para plugar o backend, basta trocar este conteúdo por chamadas `axios` ou `fetch`.
+2. **Custom Hooks (`src/hooks/`)**: Atuam como **Controllers**. Abstraem toda a lógica procedural pesada e controle de estado global como: `isLoading`, `error` fallbacks, e validação de sucessos. A camada de vista apenas engole dados reativos puros.
+3. **Mocks e Contratos (`src/types/` e `src/mocks/`)**: Todo o tráfego de dados é fortemente tipado com TypeScript (`DailyLog`, `PhysioDashboardData`), blindando contra quebras de contrato.
+4. **Co-localização de Estilos**: A adoção madura do **Utility-First CSS (Tailwind)**. Nenhuma folha de estilos morta (código zumbi): os estilos nascem, definem cores e hierarquias baseados nos Design Tokens globais, e morrem junto com o bloco de código JSX.
+5. **Roteamento Encapsulado**: Roteadores isolados via React Router (`/physio/*` vs `/patient/*`) com Layouts dedicados para que as lógicas de sessão e navegação não cruzem de maneira insegura.
 
 ---
 
