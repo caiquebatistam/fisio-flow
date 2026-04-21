@@ -1,4 +1,4 @@
-import type { PatientDashboardData, DailyLog } from '../types/patient';
+import type { PatientDashboardData, DailyLog, PhysioDashboardData } from '../types/patient';
 
 export const mockDashboardData: PatientDashboardData = {
   profile: {
@@ -29,3 +29,41 @@ export const mockDashboardData: PatientDashboardData = {
 
 // Simulated mock database for logs
 export let mockLogsDB: DailyLog[] = [...mockDashboardData.weeklyLogs];
+
+export const mockPhysioDashboardData: PhysioDashboardData = {
+  physioName: 'Dr. Roberto',
+  kpis: {
+    clinicalAdherence: 84,
+    newPrescriptions: 6,
+    readyForDischarge: 2,
+  },
+  patients: [
+    {
+      id: 'pat_123',
+      name: 'Dona Carmem',
+      avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150&h=150',
+      condition: 'Cervicalgia Aguda',
+      adherencePercentage: 75,
+      status: 'active',
+      lastActive: 'Hoje',
+    },
+    {
+      id: 'pat_456',
+      name: 'Sr. João Batista',
+      avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150',
+      condition: 'Pós-operatório LCA',
+      adherencePercentage: 92,
+      status: 'ready',
+      lastActive: 'Ontem',
+    },
+    {
+      id: 'pat_789',
+      name: 'Mariana Silva',
+      avatarUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150&h=150',
+      condition: 'Tendinopatia Patelar',
+      adherencePercentage: 40,
+      status: 'alert',
+      lastActive: 'Há 5 dias',
+    }
+  ]
+};

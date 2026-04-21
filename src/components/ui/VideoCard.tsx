@@ -4,9 +4,10 @@ import type { Exercise } from '../../types';
 interface VideoCardProps {
   exercise: Exercise;
   onClick?: (exercise: Exercise) => void;
+  actionButton?: React.ReactNode;
 }
 
-export const VideoCard: React.FC<VideoCardProps> = ({ exercise, onClick }) => {
+export const VideoCard: React.FC<VideoCardProps> = ({ exercise, onClick, actionButton }) => {
   return (
     <div 
       className="group bg-surface-container-low rounded-3xl overflow-hidden transition-all duration-300 hover:shadow-[0_12px_32px_rgba(27,29,14,0.06)] cursor-pointer"
@@ -43,6 +44,11 @@ export const VideoCard: React.FC<VideoCardProps> = ({ exercise, onClick }) => {
             </>
           )}
         </div>
+        {actionButton && (
+          <div className="pt-2 flex justify-end w-full">
+            {actionButton}
+          </div>
+        )}
       </div>
     </div>
   );

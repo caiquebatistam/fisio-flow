@@ -4,20 +4,27 @@ import { Library } from './pages/Library';
 import { PatientDashboard } from './pages/patient/PatientDashboard';
 import { WellnessDiary } from './pages/patient/WellnessDiary';
 import { ExercisePlayerPage } from './pages/patient/ExercisePlayerPage';
+import { PhysioDashboard } from './pages/physio/PhysioDashboard';
+import { PatientList } from './pages/physio/PatientList';
+import { Prescription } from './pages/Prescription';
 
-const PhysioLayout = () => (
-  <>
-    <nav className="bg-[#fbfbe2]/80 dark:bg-stone-950/80 backdrop-blur-xl sticky top-0 z-50 shadow-[0_8px_24px_rgba(27,29,14,0.06)]">
-      <div className="flex justify-between items-center w-full max-w-[1440px] mx-auto px-6 sm:px-12 py-4">
-        <div className="flex items-center gap-12">
-          <span className="text-2xl font-bold text-[#486730] dark:text-[#87a96b]">FisioFlow</span>
-          <div className="hidden md:flex items-center gap-8 font-inter antialiased tracking-tight">
-            <a className="text-[#50606f] dark:text-stone-400 hover:text-[#486730] transition-colors duration-200" href="#">Painel</a>
-            <a className="text-[#50606f] dark:text-stone-400 hover:text-[#486730] transition-colors duration-200" href="#">Pacientes</a>
-            <span className="text-[#486730] dark:text-[#87a96b] font-bold border-b-2 border-[#486730] pb-1 cursor-pointer">Biblioteca</span>
-            <a className="text-[#50606f] dark:text-stone-400 hover:text-[#486730] transition-colors duration-200" href="#">Prescrições</a>
+const PhysioLayout = () => {
+  const location = useLocation();
+  const isActive = (path: string) => location.pathname === path;
+
+  return (
+    <div className="bg-[#fbfbe2] min-h-screen">
+      <nav className="bg-[#fbfbe2]/80 dark:bg-stone-950/80 backdrop-blur-xl sticky top-0 z-50 shadow-[0_8px_24px_rgba(27,29,14,0.06)]">
+        <div className="flex justify-between items-center w-full max-w-[1440px] mx-auto px-6 sm:px-12 py-4">
+          <div className="flex items-center gap-12">
+            <span className="text-2xl font-bold text-[#486730] dark:text-[#87a96b]">FisioFlow</span>
+            <div className="hidden md:flex items-center gap-8 font-inter antialiased tracking-tight">
+              <Link to="/physio/dashboard" className={`transition-colors duration-200 ${isActive('/physio/dashboard') ? 'text-[#486730] dark:text-[#87a96b] font-bold border-b-2 border-[#486730] pb-1' : 'text-[#50606f] dark:text-stone-400 hover:text-[#486730]'}`}>Painel</Link>
+              <Link to="/physio/patients" className={`transition-colors duration-200 ${isActive('/physio/patients') ? 'text-[#486730] dark:text-[#87a96b] font-bold border-b-2 border-[#486730] pb-1' : 'text-[#50606f] dark:text-stone-400 hover:text-[#486730]'}`}>Pacientes</Link>
+              <Link to="/physio/library" className={`transition-colors duration-200 ${isActive('/physio/library') ? 'text-[#486730] dark:text-[#87a96b] font-bold border-b-2 border-[#486730] pb-1' : 'text-[#50606f] dark:text-stone-400 hover:text-[#486730]'}`}>Biblioteca</Link>
+              <Link to="/physio/prescriptions" className={`transition-colors duration-200 ${isActive('/physio/prescriptions') ? 'text-[#486730] dark:text-[#87a96b] font-bold border-b-2 border-[#486730] pb-1' : 'text-[#50606f] dark:text-stone-400 hover:text-[#486730]'}`}>Prescrições</Link>
+            </div>
           </div>
-        </div>
         <div className="flex items-center gap-6">
           <div className="hidden lg:flex items-center bg-surface-container-low px-4 py-2 rounded-full w-64 border-none shadow-sm">
             <span className="material-symbols-outlined text-outline">search</span>
@@ -36,12 +43,13 @@ const PhysioLayout = () => (
           </div>
         </div>
       </div>
-    </nav>
-    <main className="max-w-[1440px] mx-auto px-6 sm:px-12 py-10 flex flex-col lg:flex-row gap-10">
-      <Outlet />
-    </main>
-  </>
-);
+      </nav>
+      <main className="max-w-[1440px] mx-auto px-6 sm:px-12 py-10 flex flex-col lg:flex-row gap-10">
+        <Outlet />
+      </main>
+    </div>
+  );
+};
 
 const PatientLayout = () => {
   const location = useLocation();
@@ -76,12 +84,15 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        {/* Redirect root to physio library for now */}
-        <Route path="/" element={<Navigate to="/physio/library" replace />} />
+        {/* Redirect root to physio dashboard for now */}
+        <Route path="/" element={<Navigate to="/physio/dashboard" replace />} />
 
         {/* Physio Routes */}
         <Route path="/physio" element={<PhysioLayout />}>
+          <Route path="dashboard" element={<PhysioDashboard />} />
+          <Route path="patients" element={<PatientList />} />
           <Route path="library" element={<Library />} />
+          <Route path="prescriptions" element={<Prescription />} />
         </Route>
 
         {/* Patient Routes */}
